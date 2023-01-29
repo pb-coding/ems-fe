@@ -22,7 +22,7 @@ function MainBody() {
                         </svg>
                     </Card>
                 </div>
-                <a href="https://api.enphaseenergy.com/oauth/authorize?response_type=code&client_id=8969127dbb1692152b1fb04d2e421694&redirect_uri=http://localhost:8080/enphase/oauth">Login to Enphase</a>
+                <a href="https://api.enphaseenergy.com/oauth/authorize?response_type=code&client_id=8969127dbb1692152b1fb04d2e421694&redirect_uri=http://localhost:8080/enphase/oauth/1">Login to Enphase</a>
             </div>
             <div id="last-incomes">
                 <h1 className="font-bold py-4 uppercase">Last 24h incomes</h1>

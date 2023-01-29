@@ -1,6 +1,13 @@
 import React, { useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from './AuthContext'
+import Grid from '@mui/joy/Grid'
+import Input from '@mui/joy/Input'
+import Button from '@mui/joy/Button'
+import Typography from '@mui/joy/Typography';
+import Sheet from '@mui/joy/Sheet';
+import '@fontsource/public-sans';
+import emsTheme from '../theme'
 
 function Login() {
     
@@ -15,49 +22,66 @@ function Login() {
        }
        await login(payload)
     }
-    
+
     return (
-        <div className="grid h-screen w-screen place-items-center bg-slate-800 px-4 text-sm font-medium">
-            <div className="w-full max-w-sm rounded-lg bg-slate-700/30 shadow">
-                <form className="p-4 md:p-5 lg:p-6">
-                <div className="grid gap-y-3">
-                    <button className="flex items-center justify-center gap-x-2 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-300 transition hover:text-purple-400">
-                        Register
-                    </button>
-                </div>
-
-                <div className="my-3 flex items-center px-3">
-                    <hr className="w-full border-slate-600" />
-                    <span className="mx-3 text-slate-500">or</span>
-                    <hr className="w-full border-slate-600" />
-                </div>
-
-                <div className="grid gap-y-3">
-                    <input 
-                        className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400" 
-                        type="text"
-                        name="username"
-                        ref={username}
-                        placeholder="Username"
-                    />
-                    <input 
-                        className="focus:border-purple-400 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-200 outline-none transition placeholder:text-slate-400"
-                        type="password"
-                        name="password"
-                        ref={password}
-                        placeholder="Password" 
-                    />
-                    <button
-                        type="button"
-                        className="flex items-center justify-center gap-x-2 rounded-md border border-slate-600 bg-slate-700 py-3 px-4 text-slate-300 transition hover:text-purple-400"
-                        onClick={loginSubmit}
-                    >
-                        Login
-                    </button>
-                </div>
-                </form>
-            </div>
-            </div>
+        <Sheet>
+            <Grid 
+                container
+                direction="column"
+                spacing={2}
+                alignItems="center"
+                justifyContent="center"
+                sx={{ 
+                    minHeight: "100vh",
+                    backgroundColor: emsTheme.color.bg,
+                }}
+            >
+                <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    p={5}
+                    sx={{
+                        backgroundColor: emsTheme.color.surface
+                    }}
+                >
+                    <Grid my="3">
+                        <Typography level="h2" >Login</Typography>
+                    </Grid>
+                    <form>
+                        <Grid>
+                            <Input
+                                disabled={false}
+                                placeholder="username"
+                                type="text"
+                                name="username"
+                                slotProps={{ input: { ref: username } }}
+                            />
+                        </Grid>
+                        <Grid>
+                            <Input
+                                color="primary"
+                                disabled={false}
+                                placeholder="password"
+                                type="password"
+                                name="password"
+                                slotProps={{ input: { ref: password } }}
+                            />
+                        </Grid>
+                        <Grid>
+                            <Button
+                                color="primary"
+                                type="button"
+                                onClick={loginSubmit}
+                            >
+                                Login
+                            </Button>
+                        </Grid>
+                    </form>
+                </Grid>
+            </Grid>
+        </Sheet>
     )
 }
 export default Login;
