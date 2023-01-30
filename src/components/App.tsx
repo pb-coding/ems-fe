@@ -3,16 +3,18 @@ import { Routes, Route } from 'react-router-dom'
 import '../index.css'
 import Dashboard from './Dashboard'
 import Login from './Login'
-import { CssVarsProvider } from '@mui/joy/styles';
+import { CssVarsProvider, extendTheme } from '@mui/joy/styles';
 import { AuthProvider } from './AuthContext'
 import ProtectedRoute from './ProtectedRoute'
 import emsTheme from '../theme'
+
+const theme = extendTheme({ cssVarPrefix: 'demo' });
 
 function App() {
   
 
   return (
-    <CssVarsProvider defaultMode='dark'>
+    <CssVarsProvider theme={emsTheme}>
       <AuthProvider>
         <Routes>
           <Route path="/" element={<ProtectedRoute access="isAuthenticated"><Dashboard/></ProtectedRoute>} />
