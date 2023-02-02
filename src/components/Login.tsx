@@ -5,7 +5,8 @@ import Grid from '@mui/joy/Grid'
 import Input from '@mui/joy/Input'
 import Button from '@mui/joy/Button'
 import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
+import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import '@fontsource/public-sans';
 
 function Login() {
@@ -45,17 +46,18 @@ function Login() {
                 })}
             >
                 <Grid my="3">
-                    <Typography level="h2" sx={(theme) => ({ color: theme.vars.palette.ems.header })} >Login</Typography>
+                    <Typography level="h2" sx={(theme) => ({ color: theme.vars.palette.ems.primaryFont })} >Login</Typography>
                 </Grid>
                 <form>
                     <Grid>
                         <Input
                             color="primary"
                             variant="outlined"
-                            placeholder="username"
+                            placeholder="Username"
                             type="text"
                             name="username"
                             required
+                            startDecorator={<AccountCircleIcon />}
                             slotProps={{ input: { ref: username } }}
                         />
                     </Grid>
@@ -63,10 +65,11 @@ function Login() {
                         <Input
                             color="primary"
                             variant="outlined"
-                            placeholder="password"
+                            placeholder="Password"
                             type="password"
                             name="password"
                             required
+                            startDecorator={<KeyRoundedIcon />}
                             slotProps={{ input: { ref: password } }}
                         />
                     </Grid>

@@ -1,5 +1,6 @@
-import { EmailSharp } from '@mui/icons-material';
 import { extendTheme } from '@mui/joy/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { ThemeCssVarOverrides } from '@mui/joy'
 
 declare module '@mui/joy/styles' {
   interface Palette {
@@ -9,17 +10,21 @@ declare module '@mui/joy/styles' {
       surface: string;
       primary: string;
       header: string;
+      primaryFont: string;
+      secondaryFont: string;
     };
   }
 }
 
 const emsColors = {
-    background: 'linear-gradient(180deg, rgba(46,48,52,1) 0%, rgba(46,48,52,1) 50%, rgba(22,24,25,1) 100%)',
+    background: 'linear-gradient(90deg, rgba(37,47,66,1) 0%, rgba(1,46,102,1) 50%, rgba(37,47,66,1) 100%);',
     bodyBg: '#16171b',
     surface: '#1f2125',
-    primary: 'red',
+    primary: '#096bde',
     border: '#008fff',
-    header: '#c1c1c1'
+    header: '#c1c1c1',
+    primaryFont: '#ffffff',
+    secondaryFont: '#919397',
 };
 
 const emsTheme = extendTheme({
@@ -36,10 +41,28 @@ const emsTheme = extendTheme({
             surface: emsColors.surface,
             primary: emsColors.primary,
             header: emsColors.header,
+            primaryFont: emsColors.primaryFont,
+            secondaryFont: emsColors.secondaryFont,
         },
       }
     },
   },
 });
 
-export default emsTheme;
+const responsive = (
+  breakpoint: string,
+  classTrue: ThemeCssVarOverrides,
+  classFalse: ThemeCssVarOverrides
+) => {
+  const matches = useMediaQuery(breakpoint);
+  return matches ? classTrue : classFalse;
+}
+
+const customTheme = {
+  emsTheme,
+  emsColors,
+  responsive,
+}
+
+
+export default customTheme;

@@ -1,8 +1,5 @@
-import Card from './Card'
-
-function MainBody() {
-    return (
-        <div id="content" className="bg-slate-700 col-span-9 rounded-lg p-6">
+const old = (
+    <div id="content" className="bg-slate-700 col-span-9 rounded-lg p-6">
             <div id="24h">
                 <h1 className="font-bold py-4 uppercase">Last 24h Statistics</h1>
                 <div id="stats" className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -287,6 +284,4 @@ function MainBody() {
                 </div>
             </div>
         </div>
-    )
-}
-export default MainBody;
+)

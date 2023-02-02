@@ -1,53 +1,57 @@
 import MenuSidebar from './MenuSidebar'
-import MainBody from './MainBody'
-import { Sheet } from '@mui/joy'
+import Home from '../pages/Home'
+import { Sheet, Theme } from '@mui/joy'
 import Grid from '@mui/joy/Grid'
-import Typography from '@mui/joy/Typography'
+import customTheme from '../theme'
+import SolarManagement from '../pages/SolarManagement'
 
-function Dashboard() {
+const responsive = customTheme.responsive
+
+const sidebarGrid = (theme: Theme) => ({
+    minHeight: "95vh",
+    backgroundColor: theme.vars.palette.ems.surface,
+    borderTopLeftRadius: '20px',
+    borderBottomLeftRadius: '20px'
+})
+
+const sidebarGridMobile = (theme: Theme) => ({
+    minHeight: "30vh",
+    backgroundColor: theme.vars.palette.ems.surface,
+    borderTopLeftRadius: '20px',
+    borderTopRightRadius: '20px'
+})
+
+const mainBodyGrid = (theme: Theme) => ({
+    minHeight: "95vh",
+    backgroundColor: theme.vars.palette.ems.bodyBg,
+    borderTopRightRadius: '20px',
+    borderBottomRightRadius: '20px'
+})
+
+const dashboardBackground = (theme: Theme) => ({
+    background: theme.vars.palette.ems.background,
+    p: 2,
+    height: "98vh",
+})
+
+interface DashboardProps {
+    page: string;
+}
+
+
+
+const Dashboard = ({ page }: DashboardProps) => {
     
-    const old = (
-        <div className="antialiased bg-slate-800 w-full min-h-screen text-slate-300 relative py-4">
-            <div className="grid grid-cols-12 mx-auto gap-2 sm:gap-4 md:gap-6 lg:gap-10 xl:gap-14 max-w-7xl my-10 px-2">
-                <MenuSidebar />
-                <MainBody />
-            </div>
-        </div>
-    )
 
     return(
-        <Sheet
-            sx={(theme) => ({
-                background: theme.vars.palette.ems.background,
-                p: 2,
-                height: "98vh",
-            })}
-        >
-            <Grid 
-                container
-                sx={{ borderRadius: '30px' }}
-            >
-                <Grid 
-                    sm={3} 
-                    sx={(theme) => ({ 
-                        minHeight: "95vh",
-                        backgroundColor: theme.vars.palette.ems.surface,
-                        borderTopLeftRadius: '20px',
-                        borderBottomLeftRadius: '20px'
-                    })}
-                >
-                    <Typography level="h4" color="primary">menu bar</Typography>
+        <Sheet sx={dashboardBackground}>
+            <Grid container>
+                <Grid xs={12} sm={6} md={4} lg={3} xl={2} sx={responsive('(min-width:600px)', sidebarGrid, sidebarGridMobile)}>
+                    <MenuSidebar page={page} />
                 </Grid>
-                <Grid
-                    sm={9}
-                    sx={(theme) => ({ 
-                        minHeight: "95vh",
-                        backgroundColor: theme.vars.palette.ems.bodyBg,
-                        borderTopRightRadius: '20px',
-                        borderBottomRightRadius: '20px'
-                    })}
-                >
-                    <Typography level="h4" color="primary">main body</Typography>
+                <Grid xs={12} sm={6} md={8} lg={9} xl={10} sx={mainBodyGrid}>
+                    {page === "home" && <Home />}
+                    {page === "solar" && <SolarManagement />}
                 </Grid>
             </Grid>
         </Sheet>
