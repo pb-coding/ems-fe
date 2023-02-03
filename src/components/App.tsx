@@ -1,8 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import '../index.css'
-import Dashboard from './Dashboard'
-import Login from './Login'
+import Dashboard from './dashboard/Dashboard'
+import Login from './login/Login'
 import { CssVarsProvider, extendTheme } from '@mui/joy/styles';
 import { AuthProvider } from './AuthContext'
 import ProtectedRoute from './ProtectedRoute'

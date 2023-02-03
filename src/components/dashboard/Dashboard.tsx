@@ -1,9 +1,9 @@
 import MenuSidebar from './MenuSidebar'
-import Home from '../pages/Home'
+import Home from './home/Home'
 import { Sheet, Theme } from '@mui/joy'
 import Grid from '@mui/joy/Grid'
-import customTheme from '../theme'
-import SolarManagement from '../pages/SolarManagement'
+import customTheme from '../../theme'
+import SolarManagement from './solar/SolarManagement'
 
 const responsive = customTheme.responsive
 

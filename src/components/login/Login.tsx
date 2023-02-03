@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AuthContext from './AuthContext'
+import AuthContext from '../AuthContext'
 import Grid from '@mui/joy/Grid'
 import Input from '@mui/joy/Input'
 import Button from '@mui/joy/Button'

@@ -1,7 +1,7 @@
-import jwtInterceptor from '../services/jwtInterceptor';
+import jwtInterceptor from '../../services/jwtInterceptor';
 import React, { useContext, useEffect, useState } from 'react';
 import '@fontsource/public-sans';
-import AuthContext from './AuthContext';
+import AuthContext from '../AuthContext';
 import Grid from '@mui/joy/Grid';
 import { Link, Theme, Typography } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
@@ -96,7 +96,8 @@ function MenuSidebar({ page }: MenuSidebarProps) {
                 .then((userEndpointResponse) => {
                     setUserData(userEndpointResponse.data)
                 });
-        }     
+        }
+        else logout()
     }, [])
 
   return (
