@@ -18,7 +18,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<ProtectedRoute access="isAuthenticated"><Dashboard page="home" /></ProtectedRoute>} />
-          <Route path="/solar" element={<ProtectedRoute access="isAuthenticated"><Dashboard page="solar" /></ProtectedRoute>} />
+          <Route path="/enphase-auth" element={<ProtectedRoute access="isAuthenticated"><Dashboard page="enphase-auth" /></ProtectedRoute>} />
           <Route path="/login" element={<Login/>} />
         </Routes>
       </AuthProvider>

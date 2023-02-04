@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import jwtInterceptor from '../../../services/jwtInterceptor';
 import { Grid, Typography, Theme, TypographyProps } from '@mui/joy';
+import { useNavigate } from 'react-router-dom';
 
 interface SolarSystemOverviewCardProps {
     solarSystemId: number;
@@ -59,6 +60,8 @@ function SolarSystemOverviewCard({solarSystemId}: SolarSystemOverviewCardProps) 
     
     const [solarSystemData, setSolarSystemData] = useState<SolarSystemData>(SolarSystemDataDefaultValues);
 
+    const navigate = useNavigate()
+
 
     useEffect(() => {
 
@@ -71,10 +74,18 @@ function SolarSystemOverviewCard({solarSystemId}: SolarSystemOverviewCardProps) 
                     'Authorization': 'Bearer ' + accessToken,
                 }
             })
-                .then((solarSystemDataResponse: any) => {
-                    console.log(solarSystemDataResponse.data)
-                    setSolarSystemData(solarSystemDataResponse.data)
-                });
+            //.then on rejected promise
+            .catch((onrejectionhandled) => {
+                console.log("on rejection handled")
+                if (onrejectionhandled.response.status === 400) {
+                    console.log("ERROR 400 $$")
+                    navigate("/enphase-auth")
+                }
+            })
+            .then((solarSystemDataResponse: any) => {
+                console.log(solarSystemDataResponse.data)
+                setSolarSystemData(solarSystemDataResponse.data)
+            });
         }    
     }, [])
     

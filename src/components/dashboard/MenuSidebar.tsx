@@ -7,7 +7,7 @@ import { Link, Theme, Typography } from '@mui/joy';
 import Avatar from '@mui/joy/Avatar';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
-import SolarPowerIcon from '@mui/icons-material/SolarPower';
+import SyncLockIcon from '@mui/icons-material/SyncLock';
 import Home from '@mui/icons-material/Home';
 import { List, ListItem, ListItemButton, ListItemDecorator} from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
@@ -147,13 +147,13 @@ function MenuSidebar({ page }: MenuSidebarProps) {
                 </ListItem>
                 <ListItem sx={{menuItem}}>
                     <ListItemButton 
-                        sx={page=="solar" ? menuItemButtonActive : menuItemButton}
-                        onClick={() => navigate("/solar")}
+                        sx={page=="enphase-auth" ? menuItemButtonActive : menuItemButton}
+                        onClick={() => navigate("/enphase-auth")}
                     >
                         <ListItemDecorator sx={menuIcon}>
-                            <SolarPowerIcon />
+                            <SyncLockIcon />
                         </ListItemDecorator>
-                        Solar system
+                        Enphase Auth
                     </ListItemButton>
                 </ListItem>
             </List>

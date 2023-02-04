@@ -9,6 +9,7 @@ jwtInterceptor.interceptors.response.use(
     async (error) => {
         if (error.response.status === 401) {
 
+            console.log("Catched 401 - Refreshing token")
             let userToken = localStorage.getItem("userToken")
             if (userToken === null) {
                 return Promise.reject(error);

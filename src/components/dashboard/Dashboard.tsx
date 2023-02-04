@@ -3,7 +3,7 @@ import Home from './home/Home'
 import { Sheet, Theme } from '@mui/joy'
 import Grid from '@mui/joy/Grid'
 import customTheme from '../../theme'
-import SolarManagement from './solar/SolarManagement'
+import EnphaseAuth from './solar/EnphaseAuth'
 
 const responsive = customTheme.responsive
 
@@ -51,7 +51,7 @@ const Dashboard = ({ page }: DashboardProps) => {
                 </Grid>
                 <Grid xs={12} sm={6} md={8} lg={9} xl={10} sx={mainBodyGrid}>
                     {page === "home" && <Home />}
-                    {page === "solar" && <SolarManagement />}
+                    {page === "enphase-auth" && <EnphaseAuth />}
                 </Grid>
             </Grid>
         </Sheet>

@@ -12,6 +12,11 @@ declare module '@mui/joy/styles' {
       header: string;
       primaryFont: string;
       secondaryFont: string;
+      danger: string;
+      warning: string;
+      success: string;
+      info: string;
+      neutral: string;
     };
   }
 }
@@ -25,6 +30,11 @@ const emsColors = {
     header: '#c1c1c1',
     primaryFont: '#ffffff',
     secondaryFont: '#919397',
+    danger: '#a10e25',
+    warning: '#d4a72c',
+    success: '#0f5d26',
+    info: '5f35ae',
+    neutral: '5a5a72'
 };
 
 const emsTheme = extendTheme({
@@ -43,6 +53,11 @@ const emsTheme = extendTheme({
             header: emsColors.header,
             primaryFont: emsColors.primaryFont,
             secondaryFont: emsColors.secondaryFont,
+            danger: emsColors.danger,
+            warning: emsColors.warning,
+            success: emsColors.success,
+            info: emsColors.info,
+            neutral: emsColors.neutral,
         },
       }
     },
