@@ -17,6 +17,11 @@ function Home() {
                 <Typography level="display2" sx={{ color: "gray" }}>Some key HOME stats will be displayed here</Typography>
                 </Grid>
             </Grid>
+            <Grid xs={4} pt={3} pl={2}>
+                <Grid sx={keyCard} xs={12}>
+                <Typography level="display2" sx={{ color: "gray" }}>Something else</Typography>
+                </Grid>
+            </Grid>
         </Grid>
     )
 }
