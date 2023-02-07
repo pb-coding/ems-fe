@@ -11,6 +11,7 @@ import SyncLockIcon from '@mui/icons-material/SyncLock';
 import Home from '@mui/icons-material/Home';
 import { List, ListItem, ListItemButton, ListItemDecorator} from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
+import helpers from '../../services/helpers';
 
 
 interface MenuSidebarProps {
@@ -93,9 +94,16 @@ function MenuSidebar({ page }: MenuSidebarProps) {
                     'Authorization': 'Bearer ' + accessToken,
                 }
             })
-                .then((userEndpointResponse) => {
-                    setUserData(userEndpointResponse.data)
-                });
+            .catch((onrejectionhandled) => {
+                console.log("on rejection handled")
+                if (onrejectionhandled.response.status === 401) {
+                    console.log("Error with enphase auth. Please re-authenticate.")
+                    helpers.refreshPage()
+                }
+            })
+            .then((userEndpointResponse: any) => {
+                setUserData(userEndpointResponse.data)
+            });
         }
         else logout()
     }, [])

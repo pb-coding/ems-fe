@@ -78,7 +78,7 @@ function SolarSystemOverviewCard({solarSystemId}: SolarSystemOverviewCardProps) 
             .catch((onrejectionhandled) => {
                 console.log("on rejection handled")
                 if (onrejectionhandled.response.status === 400) {
-                    console.log("ERROR 400 $$")
+                    console.log("Error with enphase auth. Please re-authenticate.")
                     navigate("/enphase-auth")
                 }
             })

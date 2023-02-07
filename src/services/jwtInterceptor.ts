@@ -9,7 +9,7 @@ jwtInterceptor.interceptors.response.use(
     async (error) => {
         if (error.response.status === 401) {
 
-            console.log("Catched 401 - Refreshing token")
+            console.debug("Catched 401 - Refreshing token")
             let userToken = localStorage.getItem("userToken")
             if (userToken === null) {
                 return Promise.reject(error);
@@ -27,6 +27,7 @@ jwtInterceptor.interceptors.response.use(
                 return Promise.reject(err);
               });
             localStorage.setItem('userToken', JSON.stringify(refreshTokenEndpointResponse.data))
+            console.debug(refreshTokenEndpointResponse.data.access_token)
             
             console.log(error.config)
             return axios(error.config);
