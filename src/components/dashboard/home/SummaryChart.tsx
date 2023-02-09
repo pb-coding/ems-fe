@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import jwtInterceptor from '../../../services/jwtInterceptor';
 import { Grid, Typography, Theme, TypographyProps } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { 
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ReferenceLine
+} from 'recharts';
 
 function SummaryChart() {
     
@@ -87,8 +97,12 @@ function SummaryChart() {
                 }
             })
             .then((solarSummaryResponse: any) => {
-                console.log(solarSummaryResponse.data)
-                setSolarSummaryData(solarSummaryResponse.data)
+              const solarSummaryResponseData = solarSummaryResponse.data.map((interval: any) => 
+              { interval.end_at = 
+                new Date(interval.end_at * 1000).getUTCHours().toString()
+                + ":" + new Date(interval.end_at * 1000).getMinutes().toString(); return interval; })
+              console.log(solarSummaryResponseData)
+              setSolarSummaryData(solarSummaryResponseData)
             });
         }    
     }, [])
@@ -107,13 +121,13 @@ function SummaryChart() {
                 }}
                 >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="end_at" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-                <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-                <Bar dataKey="uv" fill="#ffc658" />
+                <ReferenceLine y={0} stroke="#000" />
+                <Bar dataKey="production" stackId="a" fill="#8884d8" />
+                <Bar dataKey="consumption" stackId="a" fill="#82ca9d" />
             </BarChart>
         </Grid>
     )
