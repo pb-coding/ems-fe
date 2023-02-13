@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import jwtInterceptor from '../../../services/jwtInterceptor';
+import api from '../../../services/api';
+import { useQuery } from '@tanstack/react-query';
 import Grid from '@mui/joy/Grid';
 import { Typography, Button, Theme, Link } from '@mui/joy';
 import DoneIcon from '@mui/icons-material/Done';
@@ -27,33 +29,43 @@ const loggedInStyles = (theme: Theme) => ({
 
 function EnphaseAuthCard() {
 
-    const LoginStatusDefaultValues: LoginStatusData = {
-        isUserLoggedIntoEnphase: false,
+    const { data, status } = useQuery(['enphaseLoginStatus'], api.fetchEnphaseLoginStatus);
+
+    if (status === 'loading') {
+        return (
+            <Grid xs={12} pt={3} pl={2}>
+                <Grid container sx={notLoggedInStyles} xs={12} sm={12} lg={6} xl={4} justifyContent="center" alignItems="center">
+                    <Grid xs={10}>
+                        <Typography level="body1" sx={{ color: "white" }}>Loading..</Typography>
+                    </Grid>
+                    <Grid xs={2}>
+                        {/* TODO: Infer color from theme. */}
+                        <CancelIcon sx={{ color: "#a10e25", fontSize: 35 }} />
+                    </Grid>
+                </Grid>    
+            </Grid>
+        );
     }
 
-    const [loginStatusData, setLoginStatusData] = useState<LoginStatusData>(LoginStatusDefaultValues);
-    
-    useEffect(() => {
-
-        let userToken = localStorage.getItem("userToken")
-        if (userToken) {
-            let accessToken = JSON.parse(userToken).access_token;
-        
-            jwtInterceptor.get("/api/enphase/login_status", {
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken,
-                }
-            })
-                .then((loginStatusDataResponse: any) => {
-                    console.log(loginStatusDataResponse.data)
-                    setLoginStatusData(loginStatusDataResponse.data)
-                });
-        }    
-    }, [])
+    if (status === 'error') {
+        return (
+            <Grid xs={12} pt={3} pl={2}>
+                <Grid container sx={notLoggedInStyles} xs={12} sm={12} lg={6} xl={4} justifyContent="center" alignItems="center">
+                    <Grid xs={10}>
+                        <Typography level="body1" sx={{ color: "white" }}>Error fetching Enphase Login Status.</Typography>
+                    </Grid>
+                    <Grid xs={2}>
+                        {/* TODO: Infer color from theme. */}
+                        <CancelIcon sx={{ color: "#a10e25", fontSize: 35 }} />
+                    </Grid>
+                </Grid>    
+            </Grid>
+        );
+    }
 
     return (
         <Grid xs={12} pt={3} pl={2}>
-            {loginStatusData.isUserLoggedIntoEnphase ? (
+            {data.isUserLoggedIntoEnphase ? (
                 <Grid container sx={loggedInStyles} xs={12} sm={12} lg={6} xl={4} justifyContent="center" alignItems="center">
                     <Grid xs={10}>
                         <Typography level="body1" sx={{ color: "white" }}>Enphase account is connected successfully.</Typography>
@@ -79,8 +91,6 @@ function EnphaseAuthCard() {
                         </Grid>
                     </Grid>
                 ) }
-                
-            
         </Grid>
     )
 }

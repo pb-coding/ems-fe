@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import jwtInterceptor from '../../../services/jwtInterceptor';
 import { Grid, Typography, Theme, TypographyProps } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
-import fromUnixTime from 'date-fns/fromUnixTime';
 import { 
   BarChart,
   Bar,
