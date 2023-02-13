@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import jwtInterceptor from '../../../services/jwtInterceptor';
 import { Grid, Typography, Theme, TypographyProps } from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
+import fromUnixTime from 'date-fns/fromUnixTime';
 import { 
   BarChart,
   Bar,
@@ -11,7 +12,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceLine
+  ReferenceLine,
+  ResponsiveContainer
 } from 'recharts';
 
 function SummaryChart() {
@@ -19,9 +21,9 @@ function SummaryChart() {
     const navigate = useNavigate();
 
     interface SolarSummaryInterval {
-        end_at: number;
-        production: number;
-        consumption: number;
+      end_at: number;
+      production: number;
+      consumption: number;
     }
 
     const SolarSummaryDefaultData = {
@@ -30,105 +32,77 @@ function SummaryChart() {
         consumption: 0,
     }
 
+    const convertTimestampToTime = (solarSummaryResponseData: Array<SolarSummaryInterval>) => {
+      
+      return solarSummaryResponseData.map((interval: any) => { 
+        let localDateTime = new Date(interval.end_at * 1000)
+        interval.end_at = `${localDateTime.getHours()}:${localDateTime.getMinutes()}`;
+        return interval; 
+      })
+    }
+
+
     const [solarSummaryData, setSolarSummaryData] = useState<Array<SolarSummaryInterval>>([SolarSummaryDefaultData]);
 
-    const data = [
-        {
-          name: 'Page A',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
-        },
-        {
-          name: 'Page B',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
-        },
-        {
-          name: 'Page C',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
-        },
-        {
-          name: 'Page D',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
-        },
-        {
-          name: 'Page E',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
-        },
-        {
-          name: 'Page F',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
-        },
-        {
-          name: 'Page G',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
-        },
-      ];
+    useEffect(() => {
 
-      useEffect(() => {
-
-        let userToken = localStorage.getItem("userToken")
-        if (userToken) {
-            let accessToken = JSON.parse(userToken).access_token;
-        
-            jwtInterceptor.get("/api/enphase/solar/summary?solar_system_id=" + "3447361" + "&start_date=" + "2023-02-05", {
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken,
-                }
-            })
-            //.then on rejected promise
-            .catch((onrejectionhandled) => {
-                console.log("on rejection handled")
-                if (onrejectionhandled.response.status === 400) {
-                    console.log("Error with enphase auth. Please re-authenticate.")
-                    navigate("/enphase-auth")
-                }
-            })
-            .then((solarSummaryResponse: any) => {
-              const solarSummaryResponseData = solarSummaryResponse.data.map((interval: any) => 
-              { interval.end_at = 
-                new Date(interval.end_at * 1000).getUTCHours().toString()
-                + ":" + new Date(interval.end_at * 1000).getMinutes().toString(); return interval; })
-              console.log(solarSummaryResponseData)
-              setSolarSummaryData(solarSummaryResponseData)
-            });
-        }    
+      let userToken = localStorage.getItem("userToken")
+      if (userToken) {
+          let accessToken = JSON.parse(userToken).access_token;
+      
+          jwtInterceptor.get("/api/enphase/solar/summary?solar_system_id=" + "3447361" + "&start_date=" + "2023-02-05", {
+              headers: {
+                  'Authorization': 'Bearer ' + accessToken,
+              }
+          })
+          //.then on rejected promise
+          .catch((onrejectionhandled) => {
+              console.log("on rejection handled")
+              if (onrejectionhandled.response.status === 400) {
+                  console.log("Error with enphase auth. Please re-authenticate.")
+                  navigate("/enphase-auth")
+              }
+          })
+          .then((solarSummaryResponse: any) => {
+            const solarSummaryResponseData = convertTimestampToTime(solarSummaryResponse.data)
+            console.log(solarSummaryResponseData)
+            setSolarSummaryData(solarSummaryResponseData)
+          });
+      }    
     }, [])
     
     return (
         <Grid container xs={12}>
-            <BarChart
-                width={1000}
-                height={600}
-                data={solarSummaryData}
-                margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
-                >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="end_at" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <ReferenceLine y={0} stroke="#000" />
-                <Bar dataKey="production" stackId="a" fill="#8884d8" />
-                <Bar dataKey="consumption" stackId="a" fill="#82ca9d" />
-            </BarChart>
+            <Typography level="h4" sx={{ color: "white" }}>Energy Overview Today</Typography>
+            <ResponsiveContainer width="100%" height={600}>
+              <BarChart
+                  width={1000}
+                  height={600}
+                  data={solarSummaryData}
+                  margin={{
+                      top: 20,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                  }}
+                  >
+                  <CartesianGrid strokeDasharray="3 10" />
+                  <XAxis 
+                    dataKey="end_at"
+                    tick={{ fontFamily: 'Public Sans', fontSize: 14 }}
+                    dy={5} 
+                  />
+                  <YAxis 
+                    tick={{ fontFamily: 'Public Sans', fontSize: 14 }} 
+                    dx={-5}
+                  />
+                  <Tooltip />
+                  <Legend iconType='circle' />
+                  <ReferenceLine y={0} stroke="#000" />
+                  <Bar dataKey="production" stackId="a" fill="#8884d8" />
+                  <Bar dataKey="consumption" stackId="a" fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer>
         </Grid>
     )
 }

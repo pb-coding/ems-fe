@@ -64,7 +64,6 @@ function SolarSystemOverviewCard({solarSystemId}: SolarSystemOverviewCardProps) 
 
 
     /*useEffect(() => {
-
         let userToken = localStorage.getItem("userToken")
         if (userToken) {
             let accessToken = JSON.parse(userToken).access_token;
@@ -86,7 +85,7 @@ function SolarSystemOverviewCard({solarSystemId}: SolarSystemOverviewCardProps) 
                 console.log(solarSystemDataResponse.data)
                 setSolarSystemData(solarSystemDataResponse.data)
             });
-        }    
+        }   
     }, [])*/
     
     function CardEntry({header, value, headerLevel = "body2", valueLevel = "h4" }: CardEntryProps ) {
