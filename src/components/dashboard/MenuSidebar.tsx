@@ -8,6 +8,7 @@ import Avatar from '@mui/joy/Avatar';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SyncLockIcon from '@mui/icons-material/SyncLock';
+import BroadcastOnHomeIcon from '@mui/icons-material/BroadcastOnHome';
 import Home from '@mui/icons-material/Home';
 import { List, ListItem, ListItemButton, ListItemDecorator} from '@mui/joy';
 import { useNavigate } from 'react-router-dom';
@@ -51,7 +52,7 @@ function MenuSidebar({ page }: MenuSidebarProps) {
     })
 
     const menuItem = (theme: Theme) => ({
-        my: 1,
+        my: 0.5,
     })
     
     const menuItemButton = (theme: Theme) => ({
@@ -153,7 +154,7 @@ function MenuSidebar({ page }: MenuSidebarProps) {
                         Home
                     </ListItemButton>
                 </ListItem>
-                <ListItem sx={{menuItem}}>
+                <ListItem sx={menuItem}>
                     <ListItemButton 
                         sx={page=="enphase-auth" ? menuItemButtonActive : menuItemButton}
                         onClick={() => navigate("/enphase-auth")}
@@ -162,6 +163,17 @@ function MenuSidebar({ page }: MenuSidebarProps) {
                             <SyncLockIcon />
                         </ListItemDecorator>
                         Enphase Auth
+                    </ListItemButton>
+                </ListItem>
+                <ListItem sx={menuItem}>
+                    <ListItemButton 
+                        sx={page=="smart-home" ? menuItemButtonActive : menuItemButton}
+                        onClick={() => navigate("/smarthome")}
+                    >
+                        <ListItemDecorator sx={menuIcon}>
+                            <BroadcastOnHomeIcon />
+                        </ListItemDecorator>
+                        Smart Home
                     </ListItemButton>
                 </ListItem>
             </List>

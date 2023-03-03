@@ -22,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<ProtectedRoute access="isAuthenticated"><Dashboard page="home" /></ProtectedRoute>} />
             <Route path="/enphase-auth" element={<ProtectedRoute access="isAuthenticated"><Dashboard page="enphase-auth" /></ProtectedRoute>} />
+            <Route path="/smarthome" element={<ProtectedRoute access="isAuthenticated"><Dashboard page="smart-home" /></ProtectedRoute>} />
             <Route path="/login" element={<Login/>} />
           </Routes>
         </AuthProvider>
